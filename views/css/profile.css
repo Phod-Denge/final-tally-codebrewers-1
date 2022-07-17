@@ -1,27 +1,35 @@
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+
   }
-  
-  .quizesdetail td, th {
-    border: 1px solid #dddddd;
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+table{
+    width: 80vw;
+    margin: auto;
     text-align: left;
-    padding: 8px;
-    
-  }
+}
 
-  .quizesdetail td{
-font-weight: 400;
+.quizesdetail td, .quizesdetail th {
+    border: 1px solid #ddd;
+    padding: 8px;
   }
   
-
+.quizesdetail tr:nth-child(even){background-color: #f2f2f2;}
+.quizesdetail tr:hover {background-color: #ddd;}
+  
+.quizesdetail th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #6fd649;
+    color: white;
+  }
   td a{
     color: rgb(6, 13, 105);
-  }
-  .quizesdetail tr:nth-child(even) {
-    background-color:  #6fd649;
-  color: white;
   }
 
   .profiledetail{

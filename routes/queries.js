@@ -1,6 +1,7 @@
 var quiz = require('../models/quiz');
 var question = require('../models/question');
 var attempter = require('../models/attempter');
+var quizstats = require('../models/quizstats');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -38,4 +39,10 @@ async function get_attempter_by_quizid(id)
   const res = await attempter.find({quizid:id});
   return res;
 }
-module.exports = {get_quiz_by_user,get_quiz_by_quizname,get_question_by_id,get_quiz_by_quizid,get_answer_by_username,get_attempter,get_attempter_by_quizid} 
+async function get_quizstats_by_quizid(id)
+{
+  const res = await quizstats.find({quizid:id});
+  return res;
+}
+module.exports = {get_quiz_by_user,get_quizstats_by_quizid,get_quiz_by_quizname,get_question_by_id,get_quiz_by_quizid,get_answer_by_username,get_attempter,get_attempter_by_quizid} 
+

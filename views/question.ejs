@@ -4,7 +4,12 @@
 	<title>Registration</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="./css/question.css">
-
+<script>
+	function myFunction(){
+		console.log("yup");
+		document.getElementById("aa").click();
+	}
+</script>
 
 </head>
 
@@ -31,8 +36,10 @@
                     <input type="text" name="answer" placeholder="answer" required="" class="form-control input-width">
                 </div>
                 </div>
-				<button type="submit" class="submit-btn">Confirm</button>
-				<a href="/profile" id="aa">Finish</a>
+				<button type="submit" class="submit-btn">next</button>
+				<a href="/profile" id="aa"></a>
+				<button type="submit" class="submit-btn" onclick="myFunction()">finish</button>
+				
 	
 			
             </form>

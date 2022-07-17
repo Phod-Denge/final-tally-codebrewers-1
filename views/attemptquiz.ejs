@@ -9,27 +9,10 @@
     <link rel="stylesheet" href="../css/attemptquiz.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
- <script>
- var sec = 20;
-    function pad ( val ) { return val > 9 ? val : "0" + val; }
-    setInterval( function(){
-        if(sec<=0)
-        {
-            $("#submit").click();
-        }
-        $("#seconds").html(pad(sec--%60));
-        $("#minutes").html(pad(parseInt(sec/60,10)));
-    }, 1000);
-</script>
+ 
 
 <body>
-    <p id='timer'></p>
-		
 
-    <label id="demo"></label>
-    <div class="timer">
-        <span id="minutes"></span>:<span id="seconds"></span>
-        </div>
     <section class="main">
 
 

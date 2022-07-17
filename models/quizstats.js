@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-var quizSchema = mongoose.Schema({
+var quizstatsSchema = mongoose.Schema({
 
     quizname: {
         type: String,
@@ -13,19 +13,13 @@ var quizSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    owner: {
-        type: String,
-    },
-    owneremail: {
-        type: String,
-    },
-    questionIDs:{
+    correct: {
         type  :Array,
         default:[]
     },
-    correctans:{
+    scores:{
         type  :Array,
         default:[]
     }
 })
-module.exports = mongoose.model('quiz',quizSchema)
+module.exports = mongoose.model('quizstats',quizstatsSchema)

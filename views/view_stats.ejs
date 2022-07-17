@@ -3,14 +3,22 @@
 <head>
 	<title>Welcome</title>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-	</script>
-
-	<link rel="stylesheet" href="./css/main.css">
     
     <style>
-        
-        
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.result-heading{
+    margin: 3rem;
+    margin-top: 4rem;
+    text-align: center;
+    font-size: 2.6rem;
+}
+
 .result-table{
     width: 80vw;
     margin: auto;
@@ -33,33 +41,8 @@
     color: white;
   }
 
-  .result-heading{
-    margin: 3rem;
-    margin-top: 4rem;
-    text-align: center;
-    font-size: 2.6rem;
-}
 
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-
-input{
-	text-align: center;
-}
-.mssg{
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border-radius: 5px;
-}
-
-
-
-body{
+  body{
     /* background-color: rgba(0,0,0,0.05);; */
     font-family: 'Quicksand', sans-serif;
 }
@@ -154,7 +137,6 @@ body{
     }
 }
 
-
     </style>
 </head>
 <body>
@@ -166,32 +148,29 @@ body{
                 <span class="bar"></span>
         </div>
         <ul class="nav-menu">
-           
-            <li><a href="/about" class="nav-links">About us</a></li>
+            <li><a href="/profile" class="nav-links">Profile</a></li>
+            <li><a href="/about" class="nav-links">About Us</a></li>
             <li class="abc">
                 <a href="/logout" class="nav-links">Logout</a>
             </li>
         </ul>
     </nav>
-	<h1 class="result-heading">Total Number of people attempted: <%= total %></h1>
+
+	<h1 class="result-heading">Total Number of people attempted: <%= total_attempts %></h1>
     <table class="result-table">
         <tr>
-            <th>Attempter Name:</th>
-            <th>Attempter Score: </th>
-            <th>View Responses</th>
-            
+            <th>Q </th>
+            <th>No. of Correct Attempts: </th>
+            <th>Percentage of Submission that got This Question Correct </th>
         </tr>
-    <% for (let i = 0;i<total; i++) { %>
-        <div>
-            <tr>
-       <td> <h2> <%=data[i].name%></h2></td>
-        <td><h3><%=data[i].score %> </h3>   </td> 
-    
-    <td>    <h3><a href= <%= "/viewresponses/"+data[i].name %>>View Responses</a></h3></td>
-    
-    </tr>
-    </div>
+    <% for (let i = 0;i<cl; i++) { %>
+        <tr>
+        <td><%= i %>) </td>
+        <td><%=correct[i]%></td>
+        <td><%=(correct[i]/total_attempts)*100 %> </td>   
+       </tr>
         <% } %> 
     </table>
-    </body>
+    <script src="./JS/main.js"></script>
+</body>
 </html>

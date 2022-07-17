@@ -51,6 +51,7 @@
 
 					<th>Link:</th>
 				<th>Quiz Attempter</th>
+				<th>View Stats</th>
 				</tr>
 			<tr>	
 		<% for (let i = 0;i<quizzes.length; i++) { %>
@@ -61,6 +62,7 @@
 		<td>	<h3><%= quizzes[i].questionIDs.length %> </h3></td>
 			<td><h3><a href=<%= "/startquiz/"+quizzes[i].quizid %>><%= "/startquiz/"+quizzes[i].quizid %> </a></h3></td>
 			<td><h3><a href=<%= "/get_attempters/"+quizzes[i].quizid %>>See Attempters </a></h3></td>
+			<td><h3><a href=<%= "/get_stats/"+quizzes[i].quizid %>>View Stats </a></h3></td>
 		</tr>
 		
 			<% } %> 
