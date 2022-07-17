@@ -22,6 +22,10 @@ var quizSchema = mongoose.Schema({
     questionIDs:{
         type  :Array,
         default:[]
+    },
+    correctans:{
+        type  :Array,
+        default:[]
     }
 })
 module.exports = mongoose.model('quiz',quizSchema)
