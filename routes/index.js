@@ -1,29 +1,28 @@
 
-
-
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var quiz = require('../models/quiz');
 var question = require('../models/question');
 var attempter = require('../models/attempter');
-
+var quizstats = require('../models/quizstats');
 let {get_quiz_by_user,get_attempter,get_question_by_id,get_quiz_by_quizid,get_attempter_by_quizid,get_answer_by_username}= require('./queries')
 let quiz_name="";
 let curr_user_name=""
 let curr_user_email=""
 let attempter_name=""
 let quiz_id="";
-
+let score =0;
 router.get('/',function(req,res)
 {
 	return res.render('home.ejs')
 }
 );
 
+
  router.get('/about',function(req,res){
-	return res.render('about.ejs')
- })
+ 	return res.render('about.ejs')
+  })
 
 router.get('/attemptques/:id',function(req,res){
 	// console.log(req.query)
@@ -100,33 +99,36 @@ router.get('/viewresponses/:name',function(req,res){
 	let results=get_answer_by_username(attempter_name,quiz_id);
 	results.then(d=>{
 		let answers=d[0].answers
-		let score =0;
 		correct_ans=[]
 		let Quiz = get_quiz_by_quizid(quiz_id)
-		
+		score=0;
 		Quiz.then(data=>
-		{
-			for(let i=0;i<data[0].questionIDs.length;i++)
 			{
+				correct_ans=data[0].correctans
+				for(let i=0;i<data[0].questionIDs.length;i++)
+				{
+						if(correct_ans[i]==answers[i+1])
+						{
+							score++; 	
+						}
+						if(i==data[0].questionIDs.length-1)
+						{
+								attempter.findOneAndUpdate( {name:attempter_name,quizid:quiz_id}, 
+								{$inc : {score : score}}, 
+								{new: true}, 
+								function(err, response) { 
+									quizstats.findOneAndUpdate( {quizid:quiz_id}, 
+										{$push : {scores : score}}, 
+										{new: true}, 
+										function(err, response) { 
+											return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
+										});
+								});
+							
+						}	
+				}
 				
-				let ques=get_question_by_id(data[0].questionIDs[i])
-				ques.then(question=>{
-					// console.log(question)
-					correct=question[0].answer
-					correct_ans.push(correct)
-					if(correct==answers[i+1])
-					{
-						score++; 	
-					}
-					if(i==data[0].questionIDs.length-1)
-					{
-						return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
-					}
-				})
-				
-			}
-			
-		})
+			})
 	})
 	
 });
@@ -134,20 +136,15 @@ router.get('/viewresults',function(req,res){
 	let results=get_answer_by_username(attempter_name,quiz_id);
 	results.then(d=>{
 		let answers=d[0].answers
-		let score =0;
+		score=0;
 		let Quiz = get_quiz_by_quizid(quiz_id)
-		correct_ans=[]
+		
 		Quiz.then(data=>
 		{
+			correct_ans=data[0].correctans
 			for(let i=0;i<data[0].questionIDs.length;i++)
 			{
-				
-				let ques=get_question_by_id(data[0].questionIDs[i])
-				ques.then(question=>{
-					// console.log(question)
-					correct=question[0].answer
-					correct_ans.push(correct)
-					if(correct==answers[i+1])
+					if(correct_ans[i]==answers[i+1])
 					{
 						score++; 	
 					}
@@ -157,12 +154,15 @@ router.get('/viewresults',function(req,res){
 							{$inc : {score : score}}, 
 							{new: true}, 
 							function(err, response) { 
-								return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
+								quizstats.findOneAndUpdate( {quizid:quiz_id}, 
+									{$push : {scores : score}}, 
+									{new: true}, 
+									function(err, response) { 
+										return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
+									});
 							});
 						
-					}
-				})
-				
+					}	
 			}
 			
 		})
@@ -242,6 +242,16 @@ router.post('/createquestion',function(req,res){
 							 console.log(success);
 						 }
 					 });
+					 quiz.findOneAndUpdate(
+						{ quizname: quiz_name }, 
+						{ $push: { correctans: quesInfo.answer  } },
+					   function (error, success) {
+							 if (error) {
+								 console.log(error);
+							 } else {
+								 console.log(success);
+							 }
+						 });
 				console.log('question created succefully');
 				return res.render('question.ejs');
 			}
