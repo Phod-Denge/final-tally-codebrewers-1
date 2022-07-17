@@ -57,6 +57,7 @@
 		<td><h3>QUIZ NAME:<%= quizzes[i].quizname %> </h3></td>
 		<td>	<h3>QUIZ DESCRIPTION:<%= quizzes[i].quizdescription %> </h3></td>
 		<td>	<h3>NUMBER OF QUESTION:<%= quizzes[i].questionIDs.length %> </h3></td>
+		<td><h3><a href=<%= "/get_attempters/"+quizzes[i].quizid %>>See Attempters </a></h3></td>
 			<td><h3><a href=<%= "/startquiz/"+quizzes[i].quizid %>><%= "/startquiz/"+quizzes[i].quizid %> </a></h3></td>
 	</tr>
 		
