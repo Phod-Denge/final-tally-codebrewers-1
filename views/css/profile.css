@@ -15,8 +15,12 @@ table {
 font-weight: 400;
   }
   
+
+  td a{
+    color: rgb(6, 13, 105);
+  }
   .quizesdetail tr:nth-child(even) {
-    background-color: #7f94d9;
+    background-color:  #6fd649;
   color: white;
   }
 

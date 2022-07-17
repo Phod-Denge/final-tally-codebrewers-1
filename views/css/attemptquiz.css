@@ -67,7 +67,14 @@ form{
 
 }
 
-#timer{
+.timer{
     margin-left: 4px;
-    color: yellow;
+    color: rgb(137, 17, 7);
+    position: absolute;
+background-color: rgb(249, 248, 248);
+top: 18%;
+left: 48%;
+padding: 8px;
+border-radius: 2px;
+box-shadow: 0 25px 40px -10px rgba(15, 61, 84, 0.5);
 }

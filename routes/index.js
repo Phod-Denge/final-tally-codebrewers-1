@@ -1,3 +1,6 @@
+
+
+
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
@@ -17,6 +20,11 @@ router.get('/',function(req,res)
 	return res.render('home.ejs')
 }
 );
+
+ router.get('/about',function(req,res){
+	return res.render('about.ejs')
+ })
+
 router.get('/attemptques/:id',function(req,res){
 	// console.log(req.query)
 	attempter.findOneAndUpdate(
@@ -93,8 +101,9 @@ router.get('/viewresponses/:name',function(req,res){
 	results.then(d=>{
 		let answers=d[0].answers
 		let score =0;
-		let Quiz = get_quiz_by_quizid(quiz_id)
 		correct_ans=[]
+		let Quiz = get_quiz_by_quizid(quiz_id)
+		
 		Quiz.then(data=>
 		{
 			for(let i=0;i<data[0].questionIDs.length;i++)
@@ -111,13 +120,7 @@ router.get('/viewresponses/:name',function(req,res){
 					}
 					if(i==data[0].questionIDs.length-1)
 					{
-							attempter.findOneAndUpdate( {name:attempter_name,quizid:quiz_id}, 
-							{$inc : {score : score}}, 
-							{new: true}, 
-							function(err, response) { 
-								return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
-							});
-						
+						return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
 					}
 				})
 				

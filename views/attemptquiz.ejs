@@ -7,11 +7,32 @@
 
 	<link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/attemptquiz.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
-<body>
+ <script>
+ var sec = 20;
+    function pad ( val ) { return val > 9 ? val : "0" + val; }
+    setInterval( function(){
+        if(sec<=0)
+        {
+            $("#submit").click();
+        }
+        $("#seconds").html(pad(sec--%60));
+        $("#minutes").html(pad(parseInt(sec/60,10)));
+    }, 1000);
+</script>
 
+<body>
+    <p id='timer'></p>
+		
+
+    <label id="demo"></label>
+    <div class="timer">
+        <span id="minutes"></span>:<span id="seconds"></span>
+        </div>
     <section class="main">
- 
+
+
     <form action=<%="/attemptques/"+id%> id="form1" class="search_form" spellcheck="false" method="get"> 
         <div class="container">
             <div class="col">
@@ -20,19 +41,19 @@
                 </h3>
             </div>
             <div class="col box">
-                <input name="option" type="radio" id="first" value="a" required>
+                <input name="option" type="radio" id="first" value="a">
                 <label for="first"><%=ques.a%></label>
             </div>
             <div class="col box">
-                <input name="option" type="radio" id="second" value="b" required>
+                <input name="option" type="radio" id="second" value="b">
                 <label for="second"><%=ques.b%></label>
             </div>
             <div class="col box">
-                <input name="option" type="radio" id="third" value="c" required>
+                <input name="option" type="radio" id="third" value="c">
                 <label for="third"><%=ques.c%>3</label>
             </div>
             <div class="col box">
-                <input name="option" type="radio" id="fourth" value="d" required>
+                <input name="option" type="radio" id="fourth" value="d">
                 <label for="fourth"><%=ques.d%></label>
             </div>
             <button id="submit">Submit</button>

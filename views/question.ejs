@@ -2,7 +2,10 @@
 <html>
 <head>
 	<title>Registration</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="./css/question.css">
+
+
 </head>
 
 
@@ -10,7 +13,7 @@
 
 
 		<div class="form-class">
-						 <form action="/createquestion" id="form1" class="search_form" spellcheck="false" method="post"> 
+			
 			<h1>Create Question</h1>
 			 <form action="/createquestion" id="form1" class="search_form" spellcheck="false" method="post"> 
 				<input type="text" name="question" label="Question-" placeholder="Question" required="" class="form-control question">
@@ -28,10 +31,12 @@
                     <input type="text" name="answer" placeholder="answer" required="" class="form-control input-width">
                 </div>
                 </div>
-				<button type="submit" class="submit-btn">Next</button>
+				<button type="submit" class="submit-btn">Confirm</button>
+				<a href="/profile" id="aa">Finish</a>
+	
 			
-				<a href="/profile">Submit</a>
             </form>
+			
 		</div>
 	<script src="./JS/main.js"></script>
 </body>

@@ -2,11 +2,49 @@
 <html>
 <head>
 	<title>Welcome</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-	</script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </script>
 	<link rel="stylesheet" href="../css/main.css">
+    <style>
+   
+.form-class{
+    width: 40vw;
+    margin: auto;
+    margin-top: 4rem;
+    background-color: #6577B3;
+    padding: 3.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 25px 40px -10px rgba(15, 61, 84, 0.5);
+}
+
+.form-class h1{
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+    color: #EDD94C;
+    font-weight: bold ;
+}
+
+.form-class input{
+    width: 100%;
+    border-radius: 4px;
+    font-size:1.3rem;
+}
+
+.submit-btn{
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    padding: 0.2rem;
+    margin-bottom: 0.4rem;
+    margin-top: 1rem;
+    background-color: #EDD94C;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #6577B3;
+    margin-left: 45%
+}
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -17,8 +55,8 @@
                 <span class="bar"></span>
         </div>
         <ul class="nav-menu">
-            <li><a href="/signup" class="nav-links">Teacher</a></li>
-            <li><a href="#" class="nav-links">Contact</a></li>
+           
+            <li><a href="/about" class="nav-links">About Us</a></li>
             <li class="abc">
                 <a href="/logout" class="nav-links">Logout</a>
             </li>
@@ -28,7 +66,22 @@
     <div class="form-class">
         <form action="/attemptquiz" id="form1" class="search_form" spellcheck="false" method="post"> 
            <input type="text" name="Name" label="Name-" placeholder="Name" required="" class="form-control question"><br/>
-   <button type="submit">Submit</button>
+   <button type="submit" class="submit-btn">Submit</button>
        </form>
+       <script>
+        const menuToggle = document.getElementsByClassName("menu-toggle");
+const navMenu = document.getElementsByClassName("nav-menu")[0];
+
+
+for(let i = 0 ;  i < menuToggle.length ; i++){
+    menuToggle[i].addEventListener("click" , () =>{
+        navMenu.classList.toggle("active");
+    })
+}
+
+
+       </script>
+
 </body>
+
 </html>
