@@ -7,7 +7,11 @@ userSchema = new Schema( {
 	email: String,
 	username: String,
 	password: String,
-	passwordConf: String
+	passwordConf: String,
+	quizid:{
+        type  :Array,
+        default:[]
+    }
 }),
 User = mongoose.model('User', userSchema);
 

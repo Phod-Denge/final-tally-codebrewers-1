@@ -5,7 +5,7 @@ var quiz = require('../models/quiz');
 var question = require('../models/question');
 var attempter = require('../models/attempter');
 
-let {get_quiz_by_user,get_attempter,get_question_by_id,get_quiz_by_quizid,get_answer_by_username}= require('./queries')
+let {get_quiz_by_user,get_attempter,get_question_by_id,get_quiz_by_quizid,get_attempter_by_quizid,get_answer_by_username}= require('./queries')
 let quiz_name="";
 let curr_user_name=""
 let curr_user_email=""
@@ -87,6 +87,46 @@ router.get('/startquiz/:id',function(req,res){
 
 	return res.render('start_quiz.ejs',{message:""});
 });
+router.get('/viewresponses/:name',function(req,res){
+	attempter_name=req.params.name
+	let results=get_answer_by_username(attempter_name,quiz_id);
+	results.then(d=>{
+		let answers=d[0].answers
+		let score =0;
+		let Quiz = get_quiz_by_quizid(quiz_id)
+		correct_ans=[]
+		Quiz.then(data=>
+		{
+			for(let i=0;i<data[0].questionIDs.length;i++)
+			{
+				
+				let ques=get_question_by_id(data[0].questionIDs[i])
+				ques.then(question=>{
+					// console.log(question)
+					correct=question[0].answer
+					correct_ans.push(correct)
+					if(correct==answers[i+1])
+					{
+						score++; 	
+					}
+					if(i==data[0].questionIDs.length-1)
+					{
+							attempter.findOneAndUpdate( {name:attempter_name,quizid:quiz_id}, 
+							{$inc : {score : score}}, 
+							{new: true}, 
+							function(err, response) { 
+								return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
+							});
+						
+					}
+				})
+				
+			}
+			
+		})
+	})
+	
+});
 router.get('/viewresults',function(req,res){
 	let results=get_answer_by_username(attempter_name,quiz_id);
 	results.then(d=>{
@@ -110,8 +150,13 @@ router.get('/viewresults',function(req,res){
 					}
 					if(i==data[0].questionIDs.length-1)
 					{
-						console.log(correct_ans)
-						return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
+							attempter.findOneAndUpdate( {name:attempter_name,quizid:quiz_id}, 
+							{$inc : {score : score}}, 
+							{new: true}, 
+							function(err, response) { 
+								return res.render('results.ejs',{score:score,total:data[0].questionIDs.length,correct:correct_ans,answers:answers});
+							});
+						
 					}
 				})
 				
@@ -119,6 +164,15 @@ router.get('/viewresults',function(req,res){
 			
 		})
 	})
+});
+router.get('/get_attempters/:id',function(req,res){
+	quiz_id=req.params.id
+	let attempters=get_attempter_by_quizid(quiz_id);
+	attempters.then(data=>{
+		console.log(data);
+		return res.render('view_attempter.ejs',{data:data,total:data.length});
+	})
+	
 });
 router.get('/createquiz',function(req,res){
 	return res.render('createquiz.ejs');
@@ -140,6 +194,16 @@ router.post('/createquiz',function(req,res){
 				console.log(err);
 			else
 			{
+				User.findOneAndUpdate(
+					{ username: curr_user_name,email:curr_user_email }, 
+					{ $push: { quizid: count+1  } },
+				   function (error, success) {
+						 if (error) {
+							 console.log(error);
+						 } else {
+							 console.log(success);
+						 }
+					 });
 				quiz_name=quizInfo.quizName
 				console.log('quiz created succefully');
 				return res.render('question.ejs');
